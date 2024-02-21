@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<robot name="motor" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<!-- Include robot physical parameters -->
+<xacro:property name="wheel_params_file" value="$(find gazebo_ros_motors)/params/test.yaml"/>
+<xacro:property name="wheel_params" value="${xacro.load_yaml(wheel_params_file)}"/>
+
+<xacro:property name="wheel_name" value="one"/>
+<!-- Wheel Properties -->
+<xacro:property name="wheel_width" value="${wheel_params['wheel_width']}" />
+<xacro:property name="wheel_radius" value="${wheel_params['wheel_radius']}" />
+<xacro:property name="wheel_weight" value="${wheel_params['wheel_weight']}" />
+<!-- Inertial Properties -->
+<xacro:property name="wheel_I" value="${wheel_params['wheel_I']}" />
+  <link name="base_footprint"/>
+
+  <link name="base_link">
+      <visual>
+        <origin rpy="0 0 0 " xyz="0 0 0.005"/>
+        <geometry>
+            <box size="0.4 0.4 0.01"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0 " xyz="0 0 0.005"/>
+        <geometry>
+          <box size="0.4 0.4 0.01"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="0 0 0 " xyz="0 0 0.005"/>
+        <geometry>
+          <box size="0.4 0.4 0.01"/>
+        </geometry>
+        <mass value="100"/>
+        <inertia ixx="1.0265" ixy="0" ixz="0" iyy="1.3944999999999999" iyz="0" izz="2.1320000000000001"/>
+      </inertial>
+  </link>
+
+  <joint name="base_joint" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+
+  <xacro:macro name="wheel" params="name">
+    <link name="${name}_wheel_link">
+      <visual>
+        <origin rpy="0  0 0" xyz="0 0 0"/>
+        <geometry>
+            <cylinder length="0.05" radius="0.11"/>
+        </geometry>
+      </visual>
+      <collision>
+          <origin rpy="0 0 0" xyz="0 0 0"/>
+          <geometry>
+              <cylinder length="0.05" radius="0.11"/>
+          </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+			    <cylinder length="0.05" radius="0.11"/> 
+        </geometry>
+        <!-- <mass value="1"/>
+        <inertia ixx="0.044" ixy="0" ixz="0" iyy="0.044" iyz="0" izz="0.001"/> -->
+        <mass value="${wheel_weight}" />
+        <inertia  ixx="${wheel_I['Ixx']}" ixy="${wheel_I['Ixy']}" ixz="${wheel_I['Ixz']}"
+					iyy="${wheel_I['Iyy']}" iyz="${wheel_I['Iyz']}" 
+						izz="${wheel_I['Izz']}" />
+      </inertial>
+    </link>
+  </xacro:macro>
+
+  <xacro:wheel name="${wheel_name}"/>
+
+  <xacro:include filename="$(find gazebo_ros_motors)/xacro/dc_motor.xacro"/>
+  <xacro:dc_motor motor_name="${wheel_name}_wheel" parent_link="base_link" child_link="${wheel_name}_wheel_link">
+    <xacro:property name="params_yaml" value="$(find gazebo_ros_motors)/params/dc_motor.yaml"/>
+    <!-- garantizo que la rueda no toque el suelo, elevandola mas alto que su radio -->
+    <origin xyz="0 0 ${wheel_radius*1.5}" rpy="1.5707 0 0"/>
+    <axis xyz="0 0 1" rpy="0 0 0"/>
+  </xacro:dc_motor>
+
+</robot>

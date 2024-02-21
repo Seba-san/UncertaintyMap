@@ -1,0 +1,20 @@
+# topics
+publish_velocity            : true
+publish_encoder             : true
+publish_current             : true
+publish_motor_joint_state   : true
+update_rate                 : 1000.0
+# motor model
+motor_nominal_voltage       : 24.0 # Volts
+moment_of_inertia           : 0.001 # kgm^2       # No se usa
+armature_damping_ratio      : 0.0001 # Nm/(rad/s) # No se usa
+electromotive_force_constant: 0.03 # Nm/A
+electric_resistance         : 10.0 # Ohm
+electric_inductance         : 0.001 # Henry       # No se usa
+# transmission
+gear_ratio                  : 100 # 72.0
+joint_damping               : 0.005 #0.001 #0.005
+joint_friction              : 0.0 #0.010 # 0.1 
+# shaft encoder
+encoder_ppr                 : 111
+velocity_noise              : 0.0
