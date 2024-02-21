@@ -1,6 +1,7 @@
 # Optimizing Exploration with a New Uncertainty Framework for Active SLAM Systems
 This repository is under construction.
 
+
 ## Project Description
 This repository contains the code and associated resources for our research on optimizing exploration in active SLAM systems through a new uncertainty framework. The data of all simulations are in  [data](data)
 
