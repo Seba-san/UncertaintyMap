@@ -1,0 +1,360 @@
+<sdf version='1.7'>
+  <model name='pioneer2dx'>
+    <link name='base_link'>
+      <inertial>
+        <pose>-0.1002 0 -0.0001 0 -0 0</pose>
+        <mass>10.01</mass>
+        <inertia>
+          <ixx>0.0881454</ixx>
+          <ixy>0</ixy>
+          <ixz>-0.0001998</ixz>
+          <iyy>0.197045</iyy>
+          <iyz>0</iyz>
+          <izz>0.236945</izz>
+        </inertia>
+      </inertial>
+      <collision name='base_link_fixed_joint_lump__chasis_collision_collision'>
+        <pose>-0.1 0 0 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.445 0.277 0.17</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name='base_link_fixed_joint_lump__castor_plate_collision2_collision_1'>
+        <pose>-0.3 0 -0.1 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.01</length>
+            <radius>0.01</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='base_link_fixed_joint_lump__chasis_visual_visual'>
+        <pose>-0.1 0 0.04 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://pioneer2dx/meshes/chassis.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='base_link_fixed_joint_lump__castor_plate_visual2_visual_1'>
+        <pose>-0.3 0 -0.1 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.01</length>
+            <radius>0.01</radius>
+          </cylinder>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='plate2_plate' type='revolute'>
+      <pose relative_to='base_link'>-0.3 0 -0.11 0 -0 0</pose>
+      <parent>base_link</parent>
+      <child>plate_castor</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <damping>0.005</damping>
+          <friction>0.01</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='plate_castor'>
+      <pose relative_to='plate2_plate'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>4.55e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>4.55e-05</iyy>
+          <iyz>0</iyz>
+          <izz>4.55e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name='plate_castor_fixed_joint_lump__castor_plate_collision_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.01</length>
+            <radius>0.01</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='plate_castor_fixed_joint_lump__castor_plate_visual_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.01</length>
+            <radius>0.01</radius>
+          </cylinder>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='plate_castor_joint' type='revolute'>
+      <pose relative_to='plate_castor'>-0.1 0 -0.016 0 -0 0</pose>
+      <parent>plate_castor</parent>
+      <child>castor</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <damping>0.005</damping>
+          <friction>0.01</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='castor'>
+      <pose relative_to='plate_castor_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>0.15</mass>
+        <inertia>
+          <ixx>0.000455</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00075</iyy>
+          <iyz>0</iyz>
+          <izz>0.000455</izz>
+        </inertia>
+      </inertial>
+      <collision name='castor_collision_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.3 0.3 0.3</scale>
+            <uri>model://pioneer2dx/meshes/wheel_v5.dae</uri>
+          </mesh>
+        </geometry>
+        <surface>
+					<friction>
+						<ode>
+							<mu>0.01</mu>
+							<mu2>0.01</mu2>
+							<slip1>0</slip1>
+							<slip2>0</slip2>
+							<maxVel>0.0</maxVel>
+							<minDepth>0.001</minDepth>
+						</ode>
+					</friction>
+				</surface>
+      </collision>
+      <visual name='castor_visual_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.3 0.3 0.3</scale>
+            <uri>model://pioneer2dx/meshes/wheel_v5.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='left_dc_motor' type='revolute'>
+      <pose relative_to='base_link'>0 0.17 -0.037 -1.57 0 0</pose>
+      <parent>base_link</parent>
+      <child>left_wheel</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <damping>0.005</damping>
+          <friction>0.01</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+      <physics>
+        <provide_feedback>1</provide_feedback>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </limit>
+          <provide_feedback>1</provide_feedback>
+        </ode>
+      </physics>
+    </joint>
+    <link name='left_wheel'>
+      <pose relative_to='left_dc_motor'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>1</mass>
+        <inertia>
+          <ixx>0.0030334</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00455</iyy>
+          <iyz>0</iyz>
+          <izz>0.005</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_wheel_fixed_joint_lump__left_collision_collision'>
+        <pose>0 0 0 1.57 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://pioneer2dx/meshes/wheel_v5.dae</uri>
+          </mesh>
+        </geometry>
+        <surface>
+					<friction>
+						<ode>
+							<mu>0.2</mu>
+							<mu2>0.2</mu2>
+							<slip1>0</slip1>
+							<slip2>0</slip2>
+							<maxVel>0.0</maxVel>
+							<minDepth>0.001</minDepth>
+						</ode>
+					</friction>
+				</surface>
+      </collision>
+      <visual name='left_wheel_fixed_joint_lump__left_visual_visual'>
+        <pose>0 0 0 1.57 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://pioneer2dx/meshes/wheel_v5.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='right_dc_motor' type='revolute'>
+      <pose relative_to='base_link'>0 -0.17 -0.037 -1.57 0 0</pose>
+      <parent>base_link</parent>
+      <child>right_wheel</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <damping>0.005</damping>
+          <friction>0.01</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+      <physics>
+        <provide_feedback>1</provide_feedback>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </limit>
+          <provide_feedback>1</provide_feedback>
+        </ode>
+      </physics>
+    </joint>
+    <link name='right_wheel'>
+      <pose relative_to='right_dc_motor'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>1</mass>
+        <inertia>
+          <ixx>0.0030334</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00455</iyy>
+          <iyz>0</iyz>
+          <izz>0.005</izz>
+        </inertia>
+      </inertial>
+      <collision name='right_wheel_fixed_joint_lump__right_collision_collision'>
+        <pose>0 0 0 1.57 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://pioneer2dx/meshes/wheel_v5.dae</uri>
+          </mesh>
+        </geometry>
+        <surface>
+					<friction>
+						<ode>
+							<mu>0.2</mu>
+							<mu2>0.2</mu2>
+							<slip1>0</slip1>
+							<slip2>0</slip2>
+							<maxVel>0.0</maxVel>
+							<minDepth>0.001</minDepth>
+						</ode>
+					</friction>
+				</surface>
+      </collision>
+      <visual name='right_wheel_fixed_joint_lump__right_visual_visual'>
+        <pose>0 0 0 1.57 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://pioneer2dx/meshes/wheel_v5.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <plugin name='motor_plugin' filename='libgazebo_ros_dc_motor.so'>
+      <motor_shaft_joint>right_dc_motor</motor_shaft_joint>
+      <motor_wrench_frame>right_wheel</motor_wrench_frame>
+      <command_topic>right_dc_motor/command</command_topic>
+      <velocity_topic>right_dc_motor/velocity</velocity_topic>
+      <encoder_topic>right_dc_motor/encoder</encoder_topic>
+      <current_topic>right_dc_motor/current</current_topic>
+      <supply_topic>right_dc_motor/supply_voltage</supply_topic>
+      <publish_encoder>1</publish_encoder>
+      <publish_velocity>1</publish_velocity>
+      <publish_current>1</publish_current>
+      <publish_motor_joint_state>1</publish_motor_joint_state>
+      <update_rate>100.0</update_rate>
+      <motor_nominal_voltage>24.0</motor_nominal_voltage>
+      <moment_of_inertia>0.001</moment_of_inertia>
+      <armature_damping_ratio>0.0001</armature_damping_ratio>
+      <electromotive_force_constant>0.03</electromotive_force_constant>
+      <electric_resistance>13.8</electric_resistance>
+      <electric_inductance>0.001</electric_inductance>
+      <gear_ratio>72.0</gear_ratio>
+      <encoder_ppr>111</encoder_ppr>
+      <rosDebugLevel>Debug</rosDebugLevel>
+    </plugin>
+    <static>0</static>
+    <plugin name='motor_plugin' filename='libgazebo_ros_dc_motor.so'>
+      <motor_shaft_joint>left_dc_motor</motor_shaft_joint>
+      <motor_wrench_frame>left_wheel</motor_wrench_frame>
+      <command_topic>left_dc_motor/command</command_topic>
+      <velocity_topic>left_dc_motor/velocity</velocity_topic>
+      <encoder_topic>left_dc_motor/encoder</encoder_topic>
+      <current_topic>left_dc_motor/current</current_topic>
+      <supply_topic>left_dc_motor/supply_voltage</supply_topic>
+      <publish_encoder>1</publish_encoder>
+      <publish_velocity>1</publish_velocity>
+      <publish_current>1</publish_current>
+      <publish_motor_joint_state>1</publish_motor_joint_state>
+      <update_rate>100.0</update_rate>
+      <motor_nominal_voltage>24.0</motor_nominal_voltage>
+      <moment_of_inertia>0.001</moment_of_inertia>
+      <armature_damping_ratio>0.0001</armature_damping_ratio>
+      <electromotive_force_constant>0.03</electromotive_force_constant>
+      <electric_resistance>13.8</electric_resistance>
+      <electric_inductance>0.001</electric_inductance>
+      <gear_ratio>72.0</gear_ratio>
+      <encoder_ppr>111</encoder_ppr>
+      <rosDebugLevel>Debug</rosDebugLevel>
+    </plugin>
+  </model>
+</sdf>

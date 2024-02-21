@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<launch>
+
+		<arg name="model" default="$(find pioneer2dx)/models/model.xacro"/>-->
+    <!-- <arg name="initial_pose_x" default="0.0"/> -->
+    <!-- <arg name="initial_pose_y" default="0.0"/> -->
+			<!--<arg name="model" default="$(find pioneer2dx)/models/model.sdf"/>-->
+      <!--<rosparam command="load" file="$$(find pioneer2dx)/config/robots.yaml" />-->
+<!-- BEGIN ROBOT 1-->
+<!-- <rosparam file="$(find pioneer2dx)/scripts/kf_slam/parameters.yaml" /> -->
+
+  <group ns="robot1">
+	  <param name="tf_prefix" value="robot1_tf" />
+	  <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />-->
+			  <!--<param name="robot_description" value="$(arg model)" />-->
+    <!--<rosparam file="$(find pioneer2dx)/config/pid_wheels.yaml" command="load"/>--> 
+<!--<param name="robot_description" value="$(param robot_description)"/>-->
+
+
+    <include file="$(find pioneer2dx)/launch/one_robot.launch" >
+      <arg name="init_pose" value="-x -3 -y -3 -z 0.5" />
+      <arg name="robot_name"  value="robot1" />
+    </include>
+  </group>
+	  
+<!-- BEGIN ROBOT 2-->
+  <!--<group ns="robot2">
+	  <param name="tf_prefix" value="robot2_tf" />
+<param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+<rosparam file="$(find pioneer2dx)/config/pid_wheels.yaml" command="load"/>
+    <include file="$(find pioneer2dx)/launch/one_robot.launch" >
+      <arg name="init_pose" value="-x 4 -y 0 -z 0" />
+      <arg name="robot_name"  value="robot2" />
+    </include>
+  </group>-->
+<!-- BEGIN ROBOT 3-->
+  <!--<group ns="robot3">
+	  <param name="tf_prefix" value="robot3_tf" />
+<param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+<rosparam file="$(find pioneer2dx)/config/pid_wheels.yaml" command="load"/>
+    <include file="$(find pioneer2dx)/launch/one_robot.launch" >
+      <arg name="init_pose" value="-x 4 -y 4 -z 0" />
+      <arg name="robot_name"  value="robot3" />
+    </include>
+  </group>-->
+<!-- BEGIN ROBOT 4-->
+  <!--<group ns="robot4">
+	  <param name="tf_prefix" value="robot4_tf" />
+<param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+<rosparam file="$(find pioneer2dx)/config/pid_wheels.yaml" command="load"/>
+    <include file="$(find pioneer2dx)/launch/one_robot.launch" >
+      <arg name="init_pose" value="-x 0 -y 4 -z 0" />
+      <arg name="robot_name"  value="robot4" />
+    </include>
+  </group>-->
+</launch>

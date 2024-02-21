@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<launch>
+	<node pkg="amcl" type="amcl" name="link_map_robot" output="screen">
+		<remap from="scan" to="/pioneer2dx/laser/scan_Lidar_horizontal"/>
+		<param name="laser_min_range" value="0.5"/>
+		<param name="laser_max_range" value="10"/>
+	</node>
+</launch>

@@ -1,0 +1,4 @@
+<?xml version="1.0" ?>
+<launch>
+	<node name="ros_bag_lidar" pkg="rosbag" type="record" args=" /pioneer2dx/laser/scan_Lidar_horizontal /tf /tf_static /rosout /rosout_agg /clock /pioneer2dx/ground_truth/odom /pioneer2dx/ground_truth/pose /initialpose -O $(find slam_benchmark)/bags/laser_data.bag" />
+</launch>

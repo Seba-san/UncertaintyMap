@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+<sdf version='1.7'>
+  <model name='inaut'>
+  <static>true</static>
+  	<xacro:macro name="wall" params="name pose dx dy">
+     <link name="${name}">
+      <collision name="${name}_collision">
+        <geometry>
+          <box>
+          <size>${dx} ${dy} 2.5</size>
+          </box>
+        </geometry>
+        <pose>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name="${name}_visual">
+        <pose>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>${dx} ${dy} 2.5</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+        <meta>
+          <layer>0</layer>
+        </meta>
+      </visual>
+     
+      <collision name="${name}_esq1">
+        <geometry>
+        <box>
+          <size>0.16 0.16 2.5</size>
+        </box>
+        </geometry>
+        <xacro:if value="${dy==0.15}">
+         <pose>${dx/2-0.08} 0 1.25 0 -0 0</pose>
+        </xacro:if>
+          <xacro:if value="${dx==0.15}">
+         <pose>0 ${dy/2-0.08} 1.25 0 -0 0</pose>
+        </xacro:if>
+      </collision>
+      <collision name="${name}_esq2">
+        <geometry>
+        <box>
+          <size>0.16 0.16 2.5</size>
+        </box>
+        </geometry>
+           <xacro:if value="${dy==0.15}">
+         <pose>${-dx/2+0.08} 0 1.25 0 -0 0</pose>
+        </xacro:if>
+          <xacro:if value="${dx==0.15}">
+         <pose>0 ${-dy/2+0.08} 1.25 0 -0 0</pose>
+        </xacro:if>
+       
+      </collision>
+     
+ <pose>${pose} 0 0 0 0</pose>
+    </link>		
+	</xacro:macro>
+
+  <xacro:wall name="contorno1" pose="0 13.95" dx="30.8" dy="0.15" />
+  <xacro:wall name="contorno2" pose="0 -13.95" dx="30.8" dy="0.15"  />
+  <xacro:wall name="contorno3" pose="15.4 0" dx="0.15" dy="27.9"  />
+  <xacro:wall name="contorno4" pose="-15.4 0" dx="0.15" dy="27.9" />
+
+  <xacro:wall name="pasillo1" pose="0 3.4" dx="30.8" dy="0.15"/> 
+  <xacro:wall name="pasillo2" pose="0 -3.4" dx="30.8" dy="0.15"/>
+
+  <xacro:wall name="division1_izq" pose="7.8 8.7" dx="0.15" dy="10.6"/>
+  <xacro:wall name="division2_izq" pose="0.6 8.7" dx="0.15" dy="10.6"/>
+  <xacro:wall name="division3_izq" pose="-7.1 8.7" dx="0.15" dy="10.6"/>
+
+  <xacro:wall name="division1_der" pose="7.8 -8.65" dx="0.15" dy="10.5"/>
+  <xacro:wall name="division2_der" pose="2.7 -8.65" dx="0.15" dy="10.5"/>
+  <xacro:wall name="division3_der" pose="-1.9 -8.65" dx="0.15" dy="10.5"/>
+  <xacro:wall name="division4_der" pose="-7.1 -8.65" dx="0.15" dy="10.5"/>
+
+  <xacro:wall name="interna1" pose="-13.9 0" dx="0.15" dy="3.7"/>
+  <xacro:wall name="interna2" pose="-3.8 0" dx="0.15" dy="3.7"/>
+  <xacro:wall name="interna3" pose="-2.4 0" dx="0.15" dy="3.7"/>
+  <xacro:wall name="interna4" pose="9.4 0" dx="0.15" dy="3.7"/>
+
+  <xacro:wall name="interna5" pose="10.9 0" dx="0.15" dy="6.8" />
+
+  <xacro:wall name="pasillo3" pose="-8.85 1.85" dx="10.1" dy="0.15"/>
+  <xacro:wall name="pasillo4" pose="-8.85 -1.85" dx="10.1" dy="0.15"/>
+  <xacro:wall name="pasillo5" pose="3.5 1.85" dx="11.8" dy="0.15" />
+   <xacro:wall name="pasillo6" pose="3.5 -1.85" dx="11.8" dy="0.15"/>
+
+
+
+  </model>
+</sdf>
+</robot>
+
+

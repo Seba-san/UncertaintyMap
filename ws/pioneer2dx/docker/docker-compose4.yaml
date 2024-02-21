@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+        ros-bridge:
+                image: pioneer-ros
+                command: roslaunch run.launch
+                network_mode: host
+                #  volumes:
+                #          - type: bind 
+                #            source: ./bags
+                #            target: /home
+
+                #  ros-mirror:
+                #          image: ros-bridge
+                #          command: python /home/mirror.py
+                #          network_mode: host
+                #          volumes:
+                #                  - type: bind 
+                #                    source: ./bags
+                #                    target: /home
+                #                  
+

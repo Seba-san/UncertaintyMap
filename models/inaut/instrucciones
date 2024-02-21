@@ -1,0 +1,17 @@
+Para compilar el mapa hay que hacer:
+.- sourcear el entorno ros.
+.- rosrun xacro xacro model.xacro >model.sdf
+.- Abrir el documento model.sdf y borrar los tags "robot"
+.- copiarlo en el docker: 
+    .- cd /home/seba/Dropbox/1_Doctorado/exploration_method/kf_slam
+    .- ./reload_docker
+    .- ./run.sh rosclassic
+    abrir otra terminal:
+    .- cd /home/seba/Dropbox/1_Doctorado/exploration_method/limpio_docker/models
+    .- docker cp inaut rosros_exploration:/usr/share/gazebo-11/models/
+    .- docker cp pioneer2dx rosros_exploration:/root/ws/src/
+
+luego dentro del contenedor hacer:
+.- roslaunch pioneer2dx inaut.launch
+.-  cd /root/ws/src/pioneer2dx/scripts
+.- python controller_node.py 

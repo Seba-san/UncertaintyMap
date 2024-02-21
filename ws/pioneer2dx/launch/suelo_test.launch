@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<launch>
+	<include file="$(find pioneer2dx)/launch/base_v5.launch"> <!--base_v4 -->
+		
+			<!--<arg name="world_name" value="$(find campo)/worlds/complex_surface_v2.world"/>-->
+		<arg name="world_name" value="$(find campo)/worlds/base_v4.world"/>-->
+	</include>
+</launch>

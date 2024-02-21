@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<launch>
+	<arg name="robot_name"/>
+	<arg name="init_pose" value="-x 0 -y 0 -z 0.0" />
+	<node name="spawn_bot_model_$(arg robot_name)" pkg="gazebo_ros" type="spawn_model"
+     args="$(arg init_pose) -sdf -file $(find pioneer2dx)/models/model.sdf -model $(arg robot_name)"
+		respawn="false" output="screen" />-->
+
+	<!--<arg name="model" default="$(find pioneer2dx)/models/model.xacro"/>
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+
+   Run a python script to the send a service call to gazebo_ros to spawn a URDF robot 
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	args="-urdf -model pioneer2dx -param robot_description"/>
+
+	<rosparam file="$(find pioneer2dx)/config/diff_drive_controller.yaml" command="load"/>-->
+
+</launch>
+

@@ -1,0 +1,1 @@
+Para generar un sdf a partir de urdf: gz sdf -p model.urdf >model.sdf

@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+    <world name="default">
+        <physics type="ode">
+            <real_time_update_rate>1000</real_time_update_rate>
+            <ode>
+              <solver>
+                <!-- <type>world</type> -->
+                <type>quick</type>
+                <iters>500</iters>
+                <max_contacts>1</max_contacts>
+              </solver>
+              <!-- <constraints>
+                <contact_max_correcting_vel>0.1</contact_max_correcting_vel>
+                <contact_surface_layer>0.0001</contact_surface_layer>
+              </constraints> -->
+            </ode>
+            <!-- <max_step_size>0.001</max_step_size> -->
+          </physics>
+        <!-- A global light source -->
+        <include>
+            <uri>model://sun</uri>
+        </include>
+        <!-- A ground plane -->
+        <!-- <include>
+            <uri>model://Depot_modificado</uri>
+        </include>-->
+        <include> 
+            <uri>model://ground_plane</uri>
+        </include>
+        <include>
+            <uri>model://rrt_planner_test</uri>
+        </include>
+	      <!-- <include> -->
+            <!-- <name>Cono_0 </name> -->
+            <!-- <uri>model://Cone</uri> -->
+            <!-- <pose>-3 -5 0 0 0</pose> -->
+        <!-- </include> -->
+        <!-- <include> -->
+          <!-- <name>Cono_1 </name> -->
+          <!-- <uri>model://Cone</uri> -->
+          <!-- <pose>3 -5 0 0 0</pose> -->
+      <!-- </include> -->
+      <!-- <include> -->
+        <!-- <name>Cono_2 </name> -->
+        <!-- <uri>model://Cone</uri> -->
+        <!-- <pose>3 4 0 0 0</pose> -->
+    <!-- </include> -->
+          <include>
+        <name>Cono_n </name>
+        <uri>model://Cone</uri>
+        <pose>-7 -1 0 0 0</pose>
+    </include>
+
+
+            </world>
+</sdf>

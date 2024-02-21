@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<launch>
+	<arg name="path_bag" default="$(find slam_benchmark)/bags/laser_data.bag" />
+	<arg name="topics_" default="/clock /pioneer2dx/ground_truth/odom /pioneer2dx/laser/scan_Lidar_horizontal /tf /tf_static"/>
+	<node name="bag_play" pkg="rosbag" type="play" output="screen" args="$(arg path_bag) --topics $(arg topics_) --clock" />
+		<!--ojo, hay que agregarle el - -clock (con menos menos)  -->
+		<!--Fuente:https://answers.ros.org/question/288672/how-use_sim_time-works/ -->
+</launch>
+
+

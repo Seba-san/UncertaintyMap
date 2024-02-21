@@ -1,0 +1,29 @@
+Fuente: https://answers.ros.org/question/119316/using-controller-manager-and-getting-it-to-work/
+When the controller manager loads a controller, it is in the stopped state. You need to explicitly start it to transition to a running state. You can check a controller's state by calling /controller_manager/list_controllers
+
+This the usual flow:
+
+Load a controller: Use the /controller_manager/load_controller service
+
+Precondition: Controller config loaded in the ROS param server.
+Effect: Calls the controller's init(...) method.
+Postcondition: Controller is loaded, but stopped.
+Start a controller: Use the /controller_manager/switch_controller service (start_controllers field)
+
+Precondition: Controller already loaded and stopped. Resources to claim are available.
+Effect: Calls the controller's starting(...) method
+Postcondition: Running controller.
+Stop a controller: Use the /controller_manager/switch_controller service (stop_controllers field)
+
+Precondition: Controller is running.
+Effect: Calls the controller's stopping(...) method
+Postcondition: Stopped (but still loaded) controller.
+Unload a controller: Use the /controller_manager/load_controller service
+
+Precondition: Controller is stopped.
+Effect: Calls controller destructor.
+Postcondition: Controller no longer managed by the controller_manager.
+
+Para que funcione el differential controler, es necesario publicar un mensaje en el topic "cmd_vel", para saber exactamente cual es hay que hacer roswtf y ver cual es el nodo que se esta escuchando pero nadie publica. Con el setup actual es /rrbot/mobile_base_controller/cmd_vel
+
+Hay otro problema que suele aparecer, cuando conectas 2 ROS en red, al parecer el server no conecta con los topics de los clientes.... por lo tanto no los escucha y hace parecer que el controlador no funciona. Para solucionarlo hay que setear ROS_IP=192.168.100.102 y ROS_HOSTNAME=seba-inaut (por decir algo). ADEMAS HAY QUE incorporar los nombres en /etc/hosts es decir poner una linea con: 192.168.100.191 seba-inaut en una pc y en la otra el mismo ejemplo

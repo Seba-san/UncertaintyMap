@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<launch>
+	<include file="$(find pioneer2dx)/launch/base_v4.launch">
+		<arg name="world_name" value="$(find campo)/worlds/cesped.world"/>
+	</include>
+</launch>

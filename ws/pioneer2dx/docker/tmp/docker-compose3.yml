@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+        ros-bridge:
+                image: ros-bridge
+                command: bash -c "roslaunch rosbridge_server rosbridge_websocket.launch & && python /home/mirror.py"
+                network_mode: "host"
+                volumes:
+                        - type: bind 
+                          source: ./bags
+                          target: /home

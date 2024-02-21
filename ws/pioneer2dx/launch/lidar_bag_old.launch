@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<launch>
+	<!-- Source: http://wiki.ros.org/slam_gmapping/Tutorials/MappingFromLoggedData#record -->
+		<!--<node name="ros_bag_lidar" pkg="rosbag" type="record" args=" /pioneer2dx/laser/scan_Lidar_horizontal /tf /tf_static /rosout /rosout_agg /clock  /rrbot/mobile_base_controller/odom  /pioneer2dx/ground_truth/odom /pioneer2dx/ground_truth/pose /initialpose -O $(find pioneer2dx)/bags/laser_data.bag" />-->
+	<node name="ros_bag_lidar" pkg="rosbag" type="record" args=" /pioneer2dx/laser/scan_Lidar_horizontal /tf /tf_static /rosout /rosout_agg /clock /pioneer2dx/ground_truth/odom /pioneer2dx/ground_truth/pose /initialpose -O $(find slam_benchmark)/bags/laser_data.bag" />
+		<!--Hay que guardar el groundtruth -->
+
+			<!--<node name="ros_bag_lidar" pkg="rosbag" type="record" args=" -a -O $(find pioneer2dx)/bags/laser_data.bag" />-->
+</launch>

@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<sdf version='1.7'>
+  <model name='pioneer2dx'>
+    <link name='base_link'>
+      <inertial>
+        <pose>-0.1 0 0 0 -0 0</pose>
+        <mass>20</mass>
+        <inertia>
+          <ixx>0.176</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.393</iyy>
+          <iyz>0</iyz>
+          <izz>0.473</izz>
+        </inertia>
+      </inertial>
+      <collision name='base_link_fixed_joint_lump__chasis_collision_collision'>
+        <pose>-0.1 0 0 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.445 0.277 0.17</size>
+          </box>
+        </geometry>
+      </collision>
+      <collision name='base_link_fixed_joint_lump__castor_collision_collision_1'>
+        <pose>-0.3 0 -0.1 0 -0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.04</radius>
+          </sphere>
+        </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0.0</mu>
+            <mu2>0.0</mu2>
+            <slip1>0</slip1>
+            <slip2>0</slip2>
+            <maxVel>0.0</maxVel>
+            <minDepth>0.001</minDepth>
+          </ode>
+        </friction>
+      </surface>
+      </collision>
+      <visual name='base_link_fixed_joint_lump__chasis_visual_visual'>
+        <pose>-0.1 0 0.04 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://pioneer2dx/meshes/chassis.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='base_link_fixed_joint_lump__castor_visual_visual_1'>
+        <pose>-0.3 0 -0.1 0 -0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.04</radius>
+          </sphere>
+        </geometry>
+      </visual>
+    </link>
+    <link name='left_wheel'>
+      <pose relative_to='left_wheel_hinge'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>1.5</mass>
+        <inertia>
+          <ixx>0.00455</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0075</iyy>
+          <iyz>0</iyz>
+          <izz>0.00455</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_wheel_fixed_joint_lump__left_collision_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://pioneer2dx/meshes/wheel_v5.dae</uri>
+          </mesh>
+        </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>1.0</mu>
+            <mu2>1.0</mu2>
+            <slip1>0</slip1>
+            <slip2>0</slip2>
+            <maxVel>0.0</maxVel>
+            <minDepth>0.001</minDepth>
+          </ode>
+        </friction>
+      </surface>
+      </collision>
+      <visual name='left_wheel_fixed_joint_lump__left_visual_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://pioneer2dx/meshes/wheel_v5.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='left_wheel_hinge' type='revolute'>
+      <pose relative_to='base_link'>0 0.17 -0.037 0 -0 0</pose>
+      <parent>base_link</parent>
+      <child>left_wheel</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+	  <upper>1e+16</upper>
+	  <velocity>0.2</velocity>
+	  <effort>-1</effort>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+	</axis>
+	<physics>
+	    <provide_feedback>True</provide_feedback>
+	</physics>
+    </joint>
+    <joint name='right_wheel_hinge' type='revolute'>
+      <pose relative_to='base_link'>0 -0.17 -0.037 0 -0 0</pose>
+      <parent>base_link</parent>
+      <child>right_wheel</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+	  <upper>1e+16</upper>
+	  <velocity>0.2</velocity>
+	  <effort>-1</effort>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+	</axis>
+	<physics>
+	    <provide_feedback>True</provide_feedback>
+	</physics>
+    </joint>
+    <link name='right_wheel'>
+      <pose relative_to='right_wheel_hinge'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>1.5</mass>
+        <inertia>
+          <ixx>0.00455</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0075</iyy>
+          <iyz>0</iyz>
+          <izz>0.00455</izz>
+        </inertia>
+      </inertial>
+      <collision name='right_wheel_fixed_joint_lump__right_collision_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://pioneer2dx/meshes/wheel_v5.dae</uri>
+          </mesh>
+        </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>1.0</mu>
+            <mu2>1.0</mu2>
+            <slip1>0</slip1>
+            <slip2>0</slip2>
+            <maxVel>0.0</maxVel>
+            <minDepth>0.001</minDepth>
+          </ode>
+        </friction>
+      </surface>
+      </collision>
+      <visual name='right_wheel_fixed_joint_lump__right_visual_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://pioneer2dx/meshes/wheel_v5.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <static>0</static>
+    <plugin name='gazebo_ros_control' filename='libgazebo_ros_control.so'/>
+  </model>
+</sdf>

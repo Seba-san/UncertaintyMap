@@ -1,0 +1,13 @@
+# Dimension Rueda
+wheel_width : 0.1143 # 0.05
+wheel_radius : 0.1651 # 0.11
+wheel_weight : 3.5
+# Matriz de inercia - ruedas
+wheel_I : 
+  Ixx : 0.02766123
+  Ixy : 0
+  Ixz : 0
+  Iyy : 0.02766123
+  Iyz : 0
+  Izz : 0.04770152
+  # Izz : 0.001

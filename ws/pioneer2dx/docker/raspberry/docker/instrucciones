@@ -1,0 +1,2 @@
+Para crear el contenedor hacer:
+docker build . 

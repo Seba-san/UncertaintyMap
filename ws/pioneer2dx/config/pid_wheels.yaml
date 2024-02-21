@@ -1,0 +1,52 @@
+# Publish all joint states -----------------------------------
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50  
+
+# Velocity Controllers ---------------------------------------
+# Hay seguimiento perfecto, el PID tiene algun bug
+#right_wheel_controller:
+#  type: velocity_controllers/JointVelocityController
+#  joint: right_wheel_hinge
+#  pid: {p: 1.0, i: 0.01, d: 1.0}
+#
+#left_wheel_controller:
+#  type: velocity_controllers/JointVelocityController
+#  joint: left_wheel_hinge
+#  pid: {p: 1.0, i: 0.01, d: 1.0}
+
+
+right_wheel_controller:
+  type: effort_controllers/JointVelocityController
+  joint: right_wheel_hinge
+  pid: {p: 1.0, i: 0.01, d: 0.0}
+
+left_wheel_controller:
+  type: effort_controllers/JointVelocityController
+  joint: left_wheel_hinge
+  pid: {p: 1.0, i: 0.01, d: 0.0}
+    #rrbot:
+    #
+    #  # Publish all joint states -----------------------------------
+    #  joint_state_controller:
+    #    type: joint_state_controller/JointStateController
+    #    publish_rate: 50  
+    #  
+    #  # Velocity Controllers ---------------------------------------
+    #  # Hay seguimiento perfecto, el PID tiene algun bug
+    #  right_wheel_controller:
+    #    type: velocity_controllers/JointVelocityController
+    #    joint: right_wheel_hinge
+    #    pid: {p: 1.0, i: 0.01, d: 1.0}
+    #
+    #  left_wheel_controller:
+    #    type: velocity_controllers/JointVelocityController
+    #    joint: left_wheel_hinge
+    #    pid: {p: 1.0, i: 0.01, d: 1.0}
+
+    # gazebo_ros_control:
+    #         pid_gains:
+    #                 left_wheel_hinge:
+    #                         pid: {p:1.0}
+                    
+

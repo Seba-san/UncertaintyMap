@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<launch>
+	<arg name="world_name" default="$(find campo)/worlds/dynamic_world2.world"/>
+	<arg name="meshlocation" default="$(env PWD)"/>		
+		<!--<arg name="model" default="$(find pioneer2dx)/models/model.xacro"/>-->
+	<!--<arg name="gui" default="false" />-->
+	<arg name="gui" default="true" />-->
+
+        <!--<node name="joint_state_publisher_2" pkg="joint_state_publisher"
+        type="joint_state_publisher" /> -->
+	<!-- Lo nuevo -->	
+
+	<!-- these are the arguments you can pass this launch file, for example paused:=true -->
+	<arg name="paused" default="false"/>
+	<arg name="use_sim_time" default="true"/>
+	<arg name="headless" default="false"/>
+	<arg name="debug" default="true"/>
+
+	<!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+			<!--<include file="$(arg meshlocation)/test_world.sdf">-->
+			<arg name="world_name" value="$(arg world_name)"/>
+			<arg name="debug" value="$(arg debug)" />
+			<arg name="gui" value="$(arg gui)" />
+			<arg name="paused" value="$(arg paused)"/>
+			<arg name="use_sim_time" value="$(arg use_sim_time)"/>
+			<arg name="headless" value="$(arg headless)"/>
+			<arg name="extra_gazebo_args" value="--lockstep"/>
+				<!-- Ver:http://gazebosim.org/tutorials?tut=lockstep_physics_sensors&cat=sensors -->
+	</include>
+			<!--Necesario para evitar conflictos con la odometria del controlador -->
+            <!--<node pkg="tf" type="static_transform_publisher"   name="link1_broadcaster" args="0 0 0 0 0 0 /world /odom 100" />-->
+	    <!--<param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+	    <rosparam file="$(find pioneer2dx)/config/pid_wheels.yaml" command="load"/>-->
+			<!--<rosparam param="use_sim_time" subst_value="true" />-->
+						<!--<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="mobile_base_controller"/>-->
+
+
+
+
+	<include file="$(find pioneer2dx)/launch/multiple_robots.launch" >
+			<!--<arg name="model" value="$(arg model)"/>-->
+	</include>
+
+</launch>

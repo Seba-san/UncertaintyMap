@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<robot name="transmition" xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<transmission name="left_wheel_transmission">
+		<type>transmission_interface/SimpleTransmission</type>
+		<joint name="left_wheel_hinge">
+			<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+		</joint>
+		<actuator name="motor_left">
+			<mechanicalReduction>1</mechanicalReduction>
+			<hardwareInterface>VelocityJointInterface</hardwareInterface>
+		</actuator>
+		</transmission>
+	<transmission name="right_wheel_transmission">
+		<type>transmission_interface/SimpleTransmission</type>
+		<joint name="right_wheel_hinge">
+			<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+		</joint>
+		<actuator name="motor_right">
+			<mechanicalReduction>1</mechanicalReduction>
+			<hardwareInterface>VelocityJointInterface</hardwareInterface>
+		</actuator>
+	</transmission>
+
+	<gazebo>
+		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+				<!--<robotNamespace>/rrbot</robotNamespace>-->
+		</plugin>
+	</gazebo>
+</robot>

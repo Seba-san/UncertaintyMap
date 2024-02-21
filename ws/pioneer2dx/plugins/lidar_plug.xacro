@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+<!--<robot name="lidar_pioneer2dx" xmlns:xacro="http://ros.org/wiki/xacro">-->
+	<!-- hokuyo -->
+		<!--<gazebo reference="hokuyo_link">-->
+			<!-- source: http://gazebosim.org/tutorials?tut=ros_gzplugins and
+			http://sdformat.org/spec?ver=1.7&elem=sensor#sensor_lidar -->
+<xacro:macro name="lidar_config" params="name distance"> 
+ <gazebo reference="${name}">
+	  <!--<sensor type="gpu_ray" name="head_hokuyo_sensor">--> <!-- activar gpu support-->
+    <sensor type="ray" name="head_hokuyo_sensor">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>25</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159</min_angle><!-- -1.570796-->
+            <max_angle>3.14159</max_angle><!-- 1.570796-->
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.50</min>
+          <max>${distance}</max>
+          <resolution>0.03</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <!-- noise parameters based on published spec for hokuyo laser
+               achieving "+-30mm" accuracy at range < 10m.  a mean of 0.0m and
+               stddev of 0.01m will put 99.7% of samples within 0.03m of the true
+               reading. -->
+          <mean>0.0</mean>
+          <stddev>0.012</stddev>
+        </noise>
+      </ray>
+      <!--<plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_gpu_laser.so">--> <!-- activar gpu support-->
+      <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
+	      <topicName>laser/scan_${name}</topicName>
+	      <frameName>${name}</frameName>
+      <!--<robotNamespace>/</robotNamespace>-->
+      </plugin>
+    </sensor>
+  </gazebo>
+  </xacro:macro>
+</robot>

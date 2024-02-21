@@ -1,0 +1,226 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+    <world name="default">
+        <physics type="ode">
+            <real_time_update_rate>1000</real_time_update_rate>
+            <ode>
+              <solver>
+                <!-- <type>world</type> -->
+                <type>quick</type>
+                <iters>500</iters>
+                <max_contacts>1</max_contacts>
+              </solver>
+              <!-- <constraints>
+                <contact_max_correcting_vel>0.1</contact_max_correcting_vel>
+                <contact_surface_layer>0.0001</contact_surface_layer>
+              </constraints> -->
+            </ode>
+            <!-- <max_step_size>0.001</max_step_size> -->
+          </physics>
+        <!-- A global light source -->
+        <include>
+            <uri>model://sun</uri>
+        </include>
+        <!-- A ground plane -->
+        <!-- <include>
+            <uri>model://Depot_modificado</uri>
+        </include>-->
+        <include> 
+            <uri>model://ground_plane</uri>
+        </include>
+        <population name='rectangle_inferior'>
+          <!-- <name>rectangle_test</name> -->
+          <model_count>9</model_count>
+          <distribution>
+            <type>grid</type> <!-- random, uniform, grid, linear-x, linear-y,linear-z -->
+            <rows>2</rows>
+            <cols>7</cols>
+            <step>3 3 0</step>
+          </distribution>
+        <include>
+            <name>Cono_0 </name>
+            <uri>model://Cone</uri>
+            <pose>0 0 0 0 0 0</pose>
+        </include>
+        <pose>0 -10.5 0</pose>
+      </population>
+      <population name='rectangle_superior'>
+        <!-- <name>rectangle_test</name> -->
+        <model_count>9</model_count>
+        <distribution>
+          <type>grid</type> <!-- random, uniform, grid, linear-x, linear-y,linear-z -->
+          <rows>2</rows>
+          <cols>7</cols>
+          <step>3 3 0</step>
+        </distribution>
+      <include>
+          <name>Cono_1 </name>
+          <uri>model://Cone</uri>
+          <pose>0 0 0 0 0 0</pose>
+      </include>
+      <pose>0 10.5 0</pose>
+    </population>
+
+    <population name='rectangle_lateral_izq'>
+      <!-- <name>rectangle_test</name> -->
+      <model_count>9</model_count>
+      <distribution>
+        <type>grid</type> <!-- random, uniform, grid, linear-x, linear-y,linear-z -->
+        <rows>5</rows>
+        <cols>2</cols>
+        <step>3 3 0</step>
+      </distribution>
+    <include>
+        <name>Cono_2 </name>
+        <uri>model://Cone</uri>
+        <pose>0 0 0 0 0 0</pose>
+    </include>
+    <pose>-7.5 0 0</pose>
+  </population>
+  <population name='rectangle_lateral_der'>
+    <!-- <name>rectangle_test</name> -->
+    <model_count>9</model_count>
+    <distribution>
+      <type>grid</type> <!-- random, uniform, grid, linear-x, linear-y,linear-z -->
+      <rows>5</rows>
+      <cols>2</cols>
+      <step>3 3 0</step>
+    </distribution>
+  <include>
+      <name>Cono_3 </name>
+      <uri>model://Cone</uri>
+      <pose>0 0 0 0 0 0</pose>
+  </include>
+  <pose>7.5 0 0</pose>
+</population>
+
+<!-- Paredes-->
+<!-- pared 1-->
+ <model name='paredes'>
+  <static>true</static>
+<link name="pared_izq">
+  <visual name="pared_izq_visual">
+    <pose>0 0 0 0 -0 0</pose>
+    <geometry>
+      <box>
+        <size>0.2 30 2.5</size>
+      </box>
+    </geometry>
+    <material>
+      <script>
+        <uri>file://media/materials/scripts/gazebo.material</uri>
+        <name>Gazebo/Grey</name>
+      </script>
+      <ambient>1 1 1 1</ambient>
+    </material>
+    <meta>
+      <layer>0</layer>
+    </meta>
+  </visual>
+  <collision name="pared_izq_collision">
+    
+    <geometry>
+      <box>
+        <size>0.2 30 2.5</size>
+      </box>
+    </geometry>
+    <pose>0 0 0 0 0 0</pose>
+    <laser_retro>0.5</laser_retro>
+  </collision>
+  <pose>-10 0 1 0 0 0</pose>
+</link>
+<link name="pared_der">
+  <visual name="pared_der_visual">
+    <pose>0 0 0 0 -0 0</pose>
+    <geometry>
+      <box>
+        <size>0.2 30 2.5</size>
+      </box>
+    </geometry>
+    <material>
+      <script>
+        <uri>file://media/materials/scripts/gazebo.material</uri>
+        <name>Gazebo/Grey</name>
+      </script>
+      <ambient>1 1 1 1</ambient>
+    </material>
+    <meta>
+      <layer>0</layer>
+    </meta>
+  </visual>
+  <collision name="pared_der_collision">
+    <geometry>
+      <box>
+        <size>0.2 30 2.5</size>
+      </box>
+    </geometry>
+    <pose>0 0 0 0 0 0</pose>
+    <laser_retro>0.5</laser_retro>
+  </collision>
+  <pose>10 0 1 0 0 0</pose>
+</link>
+<link name="pared_arriba">
+  <visual name="pared_arriba_visual">
+    <pose>0 0 0 0 -0 0</pose>
+    <geometry>
+      <box>
+        <size>20 0.2 2.5</size>
+      </box>
+    </geometry>
+    <material>
+      <script>
+        <uri>file://media/materials/scripts/gazebo.material</uri>
+        <name>Gazebo/Grey</name>
+      </script>
+      <ambient>1 1 1 1</ambient>
+    </material>
+    <meta>
+      <layer>0</layer>
+    </meta>
+  </visual>
+  <collision name="pared_arriba_collision">
+    <geometry>
+      <box>
+        <size>20 0.2 2.5</size>
+      </box>
+    </geometry>
+    <pose>0 0 0 0 0 0</pose>
+    <laser_retro>0.5</laser_retro>
+  </collision>
+  <pose>0 15 1 0 0 0</pose>
+</link>
+<link name="pared_abajo">
+  <visual name="pared_abajo_visual">
+    <pose>0 0 0 0 -0 0</pose>
+    <geometry>
+      <box>
+        <size>20 0.2 2.5</size>
+      </box>
+    </geometry>
+    <material>
+      <script>
+        <uri>file://media/materials/scripts/gazebo.material</uri>
+        <name>Gazebo/Grey</name>
+      </script>
+      <ambient>1 1 1 1</ambient>
+    </material>
+    <meta>
+      <layer>0</layer>
+    </meta>
+  </visual>
+  <collision name="pared_abajo_collision">
+    <geometry>
+      <box>
+        <size>20 0.2 2.5</size>
+      </box>
+    </geometry>
+    <pose>0 0 0 0 0 0</pose>
+    <laser_retro>0.5</laser_retro>
+  </collision>
+  <pose>0 -15 1 0 0 0</pose>
+</link>
+</model>
+
+
+            </world>
+</sdf>

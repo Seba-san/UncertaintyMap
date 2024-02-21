@@ -1,0 +1,4 @@
+/gazebo/link_states/twist[2]/angular/y
+/robot1/joint_states/effort
+
+PlotWidget.update_plot(): error in rosplot: [/robot1/joint_states/effort[0]] index error for: header: ,   seq: 692,   stamp: ,     secs: 69,     nsecs: 200000000,   frame_id: '', name: ,   - right_wheel_hinge,   - left_wheel_hinge, position: [0.0, 0.0], velocity: [], effort: []

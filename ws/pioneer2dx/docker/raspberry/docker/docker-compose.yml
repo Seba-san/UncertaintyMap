@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+        pioneer-ros:
+                image: pioneer-ros
+                #command: roslaunch /home/run.launch
+                #command: roscore
+                command: ./home/run.sh
+                network_mode: host
+                volumes:
+                        - type: bind 
+                          source: ./bags
+                          target: /home
+                devices:
+                        - /dev/ttyUSB0:/dev/ttyUSB0
+
+                #  ros-mirror:
+                #          image: ros-bridge
+                #          command: python /home/mirror.py
+                #          network_mode: host
+                #          volumes:
+                #                  - type: bind 
+                #                    source: ./bags
+                #                    target: /home
+                #                  
+

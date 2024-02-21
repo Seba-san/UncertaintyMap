@@ -1,0 +1,5 @@
+*.bag
+bags/*
+*.svg
+*.png
+scripts/__pycache__/*

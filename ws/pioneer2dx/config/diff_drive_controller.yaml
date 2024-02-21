@@ -1,0 +1,58 @@
+rrbot:
+        mobile_base_controller:
+          type        : "diff_drive_controller/DiffDriveController"
+          left_wheel  : 'left_wheel_hinge'
+          right_wheel : 'right_wheel_hinge'
+          publish_rate: 50.0               # default: 50
+          pose_covariance_diagonal : [0.001, 0.001, 100.0, 100.0, 100.0, 100.0]
+          twist_covariance_diagonal: [0.001, 0.001, 100.0, 100.0, 100.0, 100.0]
+          # source:  http://wiki.ros.org/diff_drive_controller
+          # Wheel separation and diameter. These are both optional.
+          # diff_drive_controller will attempt to read either one or both from the
+          # URDF if not specified as a parameter
+          wheel_separation : 0.34
+          wheel_radius : 0.11
+
+          # Wheel separation and radius multipliers
+          #wheel_separation_multiplier: 1.0 # default: 1.0
+          #wheel_radius_multiplier    : 1.0 # default: 1.0
+
+          # Velocity commands timeout [s], default 0.5
+          cmd_vel_timeout: 0.25
+
+          # Base frame_id
+          base_frame_id: base_link_odometry #default: base_link
+          publish_cmd: True
+
+          # Velocity and acceleration limits
+          # Whenever a min_* is unspecified, default to -max_*
+          linear:
+            x:
+              has_velocity_limits    : true
+              max_velocity           : 1.0  # m/s
+              min_velocity           : -0.5 # m/s
+              has_acceleration_limits: true
+              max_acceleration       : 0.2  # m/s^2
+              min_acceleration       : -0.2 # m/s^2
+              has_jerk_limits        : true
+              max_jerk               : 5.0  # m/s^3
+          angular:
+            z:
+              has_velocity_limits    : true
+              max_velocity           : 0.5  # rad/s
+              has_acceleration_limits: true
+              max_acceleration       : 0.1  # rad/s^2
+              has_jerk_limits        : true
+              max_jerk               : 2.5  # rad/s^3
+
+        
+gazebo_ros_control:
+          pid_gains:
+                  left_wheel_hinge:
+                          p : 1.0
+                          i : 0.0
+                          d : 1.0
+                  right_wheel_hinge: 
+                          p : 1.0 
+                          i : 0.0
+                          d : 1.0

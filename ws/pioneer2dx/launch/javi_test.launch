@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<launch>
+	<include file="$(find pioneer2dx)/launch/base_v4.launch">
+			<!--<arg name="world_name" value="$(find campo)/worlds/javier.sdf"/>-->
+				<arg name="world_name" value="$(find campo)/scripts/modify_world/test.world"/>
+				<!--<arg name="world_name" value="$(find campo)/worlds/dynamic_world.world"/>-->
+	</include>
+</launch>

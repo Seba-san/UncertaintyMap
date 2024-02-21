@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="robot_name"/>
+	<arg name="init_pose"/>
+	<arg name="model"/>
+	
+		<!--xacro -->
+		<node name="spawn_bot_model_$(arg robot_name)" pkg="gazebo_ros" type="spawn_model"
+     args="$(arg init_pose) -urdf -param robot_description -model $(arg robot_name)"
+	respawn="false" output="screen" />
+
+		<!--sdf -->
+	<!--<node name="spawn_bot_model_$(arg robot_name)" pkg="gazebo_ros" type="spawn_model"
+     args="$(arg init_pose) -sdf -file $(find pioneer2dx)/models/model.sdf -model $(arg robot_name)"
+	respawn="false" output="screen" />-->
+
+    <!-- The odometry estimator, throttling, fake laser etc. go here -->
+	    <!-- All the stuff as from usual robot launch file -->
+
+	<node pkg="pioneer2dx" type="groundtruth.py" name="groundtruth_$(arg robot_name)" args="$(arg init_pose)" />
+	<!-- Motor Controllers -->
+	
+	<node pkg="my_controller" type="control.py" name="controller_$(arg robot_name)_left"
+	 args="/left_dc_motor/command /left_dc_motor/joint_state /left_wheel_controller/command" />
+	 <node pkg="my_controller" type="control.py" name="controller_$(arg robot_name)_right"
+	 args="/right_dc_motor/command /right_dc_motor/joint_state /right_wheel_controller/command" />
+	<!--<node pkg="my_controller" type="control.py" name="controller_$(arg robot_name)_left"
+	 args="/left_dc_motor/command /left_dc_motor/velocity /left_wheel_controller/command" />
+	 <node pkg="my_controller" type="control.py" name="controller_$(arg robot_name)_right"
+	 args="/right_dc_motor/command /right_dc_motor/velocity /right_wheel_controller/command" />-->
+	
+	
+
+	
+	<node name="robot_state_publisher_node_$(arg robot_name)" pkg="robot_state_publisher"    type="robot_state_publisher" output="screen">
+    <remap from="joint_states" to="left_dc_motor/joint_state"/>
+	</node>
+	<node name="robot_state_publisher_node_$(arg robot_name)2" pkg="robot_state_publisher"    type="robot_state_publisher" output="screen">
+		<remap from="joint_states" to="right_dc_motor/joint_state"/>
+		</node>
+	<!--<node name="joint_state_publisher_$(arg robot_name)" pkg="joint_state_publisher" type="joint_state_publisher"/> 
+	<node name="controller_spawner_$(arg robot_name)" pkg="controller_manager" type="spawner" respawn="false" output="screen" 
+		args="-namespace=/$(arg robot_name)
+		left_wheel_controller
+		right_wheel_controller 
+		joint_state_controller"/>-->
+	    
+</launch>
