@@ -1,24 +1,32 @@
-# Build docker container
-docker build -t oenuf_active_slam -f Dockerfile .
-# Run docker container
-./run.sh oenuf_active_slam
-# Enter to docker container in other terminal
-./entrar.sh
+# Instructions 
+### Build docker container
+`docker build -t oenuf_active_slam -f Dockerfile . `
+### Run docker container
 
-# To launch the system do
-roscd pioneer2dx/scripts/kf_slam/
-python prepare_simulation.py # load data from parameters.yaml in all project
-roslaunch test.launch # Launch the environment, controllers and robot
-python way_point_manager.py # it is the way point manager
-python active_slam_core_rrt.py # implements the modified RRT algorithm
+`cd kf_slam `
+`./run.sh oenuf_active_slam `
 
-# To launch all nodes run:
-roscd pioneer2dx/scripts/kf_slam/
-python master_simulations.py 
-
+### Launch a complete simulation
 This code load data from "simulaciones_planificadas.yaml", overwrite "parameters.yaml" and launch all ROS nodes.
+` roscd pioneer2dx/scripts/kf_slam/ & python master_simulations.py`
 
-# Configuration parameters of "parameters.yaml" file
+### To enter  in a docker container in other terminal
+`cd kf_slam &./entrar.sh `
+
+### To launch the system by parts do
+`roscd pioneer2dx/scripts/kf_slam/`
+load data from parameters.yaml and overwrite documents in the project
+`python prepare_simulation.py `
+ # Launch the environment, controllers and robot 
+`roslaunch test.launch `
+it is the way point manager
+`python way_point_manager.py  `
+implements the modified RRT algorithm
+`python active_slam_core_rrt.py  `
+
+
+### Configuration parameters of "parameters.yaml" file
+```
 planner: simple  # double or simple
 distance_branch: [0, 4.0, -4.0] #m
 
@@ -42,10 +50,10 @@ bbox: []
 previous_map_flag: false # load a previous situation stored in  previous_map.mat
 max_iter_rrt: 2000 # maximun iterations for the rrt* algorithm.
 map: galpon_1   #name map, it will be used as direction folder in future implementations.
-
-# Planified simulations from "simulaciones_planificadas.yaml" file
-[initial pose], [planner], type of planner, UF implementation, sigma_max and map name
-- {x: -12.0, y: -8.0,   planner: simple, mpc: False, UF: False, sigma_max: 1.0, map: galpon_1} 
+```
+### Planified simulations from "simulaciones_planificadas.yaml" file
+[initial pose], [planner], type of planner, UF implementation, sigma_max,  map name
+` - {x: -12.0, y: -8.0,   planner: simple, mpc: False, UF: False, sigma_max: 1.0, map: galpon_1}  `
 
 
 
