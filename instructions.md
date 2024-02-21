@@ -1,75 +1,79 @@
 # Instructions 
-### Build docker container
-`docker build -t oenuf_active_slam -f Dockerfile . `
-### Run docker container
+This document provides step-by-step instructions for building and running the Docker container, launching a complete simulation, and executing specific parts of the system. It also details how to configure simulation parameters.
 
-`cd kf_slam `
+### Build the Docker Container
+To build the Docker container, run the following command in your terminal:
 
-`./run.sh oenuf_active_slam `
+```bash
+docker build -t oenuf_active_slam -f Dockerfile . 
+```
+### Run the Docker Container
+To run the Docker container, navigate to the **kf_slam** directory and execute the provided script:
+```bash
+cd kf_slam 
+./run.sh oenuf_active_slam 
+```
+### Launch a Complete Simulation
+The following code loads data from [simulaciones_planificadas.yaml](./kf_slam/simulaciones_planificadas.yaml), overwrites [parameters.yaml](./kf_slam/parameters.yaml), and launches all ROS nodes necessary for the simulation:
 
-### Launch a complete simulation
-This code load data from "simulaciones_planificadas.yaml", overwrite "parameters.yaml" and launch all ROS nodes.
+```bash
+roscd pioneer2dx/scripts/kf_slam/
+python master_simulations.py
+```
 
-` roscd pioneer2dx/scripts/kf_slam/ && python master_simulations.py`
+### Enter the Docker Container in Another Terminal
+If you need to enter the Docker container through another terminal window, use the following commands:
 
-### To enter  in a docker container in other terminal
-`cd kf_slam && ./entrar.sh `
+```bash
+cd kf_slam 
+./entrar.sh
+```
 
-### To launch the system by parts do
-`roscd pioneer2dx/scripts/kf_slam/`
-
-load data from parameters.yaml and overwrite documents in the project
-
-`python prepare_simulation.py `
-
- # Launch the environment, controllers and robot 
- 
-`roslaunch test.launch `
-
-it is the way point manager
-
-`python way_point_manager.py  `
-
-implements the modified RRT algorithm
-
-`python active_slam_core_rrt.py  `
-
+### Launch the System by Parts
+To launch specific components of the system, follow these steps:
+- **Prepare the Simulation**: Load data from *parameters.yaml* and overwrite documents in the project:
+```bash
+roscd pioneer2dx/scripts/kf_slam/
+python prepare_simulation.py
+```
+- **Launch Environment, Controllers, and Robot**: 
+Start the ROS launch file to initialize the environment and the robot:
+```bash 
+roslaunch test.launch 
+```
+- **Waypoint Manager**: Execute the waypoint manager script to manage waypoints:
+```bash 
+python way_point_manager.py
+```
+-**Active SLAM Core with RRT Algorithm**:
+ Run the script implementing the modified RRT algorithm for active SLAM:
+ ```bash 
+ python active_slam_core_rrt.py 
+ ```
 ### Close Docker container:
-`cd kf_slam && ./cerrar_docker.sh `
-
-### Configuration parameters of "parameters.yaml" file
+```bash 
+cd kf_slam 
+./cerrar_docker.sh 
 ```
-planner: simple  # double or simple
-distance_branch: [0, 4.0, -4.0] #m
 
-sigma_max: 1.0 #m 0.6
-fov: 5.0 #m
-cell_size: 0.1 #m
-max_distance_landmark: 1.0 #m max distance to assign points to landmarks. A low parameter, the slam system create a lot of landmarks. A high parameter, the slam system has bad asociations
-initial_pose:
-  x: -12.0  #m -12 galpon , 3.5 corridor
-  y: -8.0     #m +-7.5 galpon, 1.0 corridor
-Q_noise: 0.01 #m^2
-R_noise: 0.01 #m^2
-P_0: 0.01 #m^2
-map_size: [60.0, 60.0] #m x,y
-UF: false # implements uncertainty frontiers
-uf_treshold: 0.3 #m uncertainty threshold
-min_obstacle_distance_sdf: 0.8 #m minimun distance to obstacles to avoid.
-min_distance_obstacle_avoidance: 0.85 #m 0.7 minimun distance to obstacles to avoid until obstacle avoidance algorithm starts to work. If it are working in corridors, set this parameter at 0.1
-#bbox: [[[0,0],[60,60],0.1,0.1],[[20,20],[40,40],0.6,0.5]] # bounding box for explored area in metters. [bbox1, bbox2,...], con bboxi=[sup izq, inf der, sigma,occupado], sup_izq=[x,y] 
-bbox: []
-previous_map_flag: false # load a previous situation stored in  previous_map.mat
-max_iter_rrt: 2000 # maximun iterations for the rrt* algorithm.
-map: galpon_1   #name map, it will be used as direction folder in future implementations.
+### Configuration Parameters
+The *parameters.yaml* file allows you to customize various simulation parameters. Here is an overview of some key parameters you can adjust:
+
+  -  **sigma_max, fov, cell_size**: Set maximum uncertainty, field of view, and cell size respectively.
+  -  **initial_pose**: Define the starting position of the robot.
+  -  **Q_noise, R_noise, P_0**: Configure noise and initial uncertainty parameters of Kalman Filter.
+  -  **map_size**: Set the dimensions of the map.
+  -  **uf_threshold**: Set the uncertainty threshold.
+  -  Additional parameters for obstacle avoidance, previous map loading, RRT* algorithm iterations, and map names.
+
+### Planned Simulations
+To configure planned simulations, edit the *simulaciones_planificadas.yaml* file. This file contains simulation setups including initial poses, planner types, UF implementation, and other parameters. For example:
+
+```yaml
+- {x: -12.0, y: -8.0, planner: simple, mpc: False, UF: False, sigma_max: 1.0, map: galpon_1}
+- {x: -12.0, y: +8.0, planner: simple, mpc: False, UF: False, sigma_max: 1.0, map: galpon_1}
+- {x: -12.0, y: +8.0, planner: simple, mpc: False, UF: False, sigma_max: 0.6, map: galpon_0}
 ```
-### Planified simulations from "simulaciones_planificadas.yaml" file
-
-[initial pose], [planner], type of planner, UF implementation, sigma_max,  map name
-
-` - {x: -12.0, y: -8.0,   planner: simple, mpc: False, UF: False, sigma_max: 1.0, map: galpon_1}  `
-
-
 
 
 
