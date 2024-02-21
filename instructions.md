@@ -10,10 +10,10 @@
 ### Launch a complete simulation
 This code load data from "simulaciones_planificadas.yaml", overwrite "parameters.yaml" and launch all ROS nodes.
 
-` roscd pioneer2dx/scripts/kf_slam/ & python master_simulations.py`
+` roscd pioneer2dx/scripts/kf_slam/ && python master_simulations.py`
 
 ### To enter  in a docker container in other terminal
-`cd kf_slam &./entrar.sh `
+`cd kf_slam && ./entrar.sh `
 
 ### To launch the system by parts do
 `roscd pioneer2dx/scripts/kf_slam/`
@@ -34,6 +34,8 @@ implements the modified RRT algorithm
 
 `python active_slam_core_rrt.py  `
 
+### Close Docker container:
+`cd kf_slam && ./cerrar_docker.sh `
 
 ### Configuration parameters of "parameters.yaml" file
 ```
