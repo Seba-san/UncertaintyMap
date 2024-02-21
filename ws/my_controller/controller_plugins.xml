@@ -1,0 +1,5 @@
+<library path="lib/libmy_controller_lib">
+  <class name="my_controller/MyPositionController"
+         type="my_controller_ns::MyPositionController"
+         base_class_type="controller_interface::ControllerBase" />
+</library>

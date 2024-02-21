@@ -1,0 +1,17 @@
+Ejemplo para lanzar el programa:
+python control.py /rrbot/left_wheel_controller/command pioneer2dx::left_wheel _left
+python control.py /rrbot/right_wheel_controller/command pioneer2dx::right_wheel _right
+
+
+python control.py /left_dc_motor/command pioneer2dx::left_wheel /rrbot/left_wheel_controller/command  
+python control.py /right_dc_motor/command pioneer2dx::right_wheel /rrbot/right_wheel_controller/command 
+
+python control.py /left_dc_motor/command /left_dc_motor/velocity /rrbot/left_wheel_controller/command  
+python control.py /right_dc_motor/command /right_dc_motor/velocity /rrbot/right_wheel_controller/command 
+
+El orden es el siguiente
+python control.py control lectura set_point
+
+Para que esto funcione es necesario configurar el controlador en el modelo del robot. Esto esta implementado en el branch "test_controler" del repo pioneer2dx.
+
+Tambien esta implementado en tutoriales dentro de pioneer2dx en pi_robot_package.
