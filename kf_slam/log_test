@@ -1,0 +1,37 @@
+waiting for data
+states:  False exp_map:  False land_map:  False obstacle_map:  False
+[INFO] [1691786955.407972, 337.682000]: data captured
+Colision detectada
+control signals:  [[2.4615384615384617, 2.46153846153846], [0, 0]]
+divergencia fast:  1520.0733643061815
+Colision detectada
+control signals:  [[0.0, 3.384615384615382], [0, 0]]
+divergencia fast:  1470.465512009821
+Colision detectada
+control signals:  [[0.0, -0.615384615384615], [0, 0]]
+divergencia fast:  1378.2666846045365
+Colision detectada
+control signals:  [[-2.4615384615384617, 2.46153846153846], [0, 0]]
+divergencia fast:  1477.0716670502936
+Colision detectada
+control signals:  [[3.0769230769230766, 0.0], [0, 0]]
+divergencia fast:  1514.394030872912
+Colision detectada
+control signals:  [[0.3076923076923077, -0.3076923076923075], [0, 0]]
+divergencia fast:  1376.2951851068565
+Colision detectada
+control signals:  [[-2.4615384615384617, -2.461538461538461], [0, 0]]
+divergencia fast:  1542.276666625814
+control signals:  [[0, 0], [0, 0]]
+divergencia fast:  1376.2951851068565
+Colision detectada
+control signals:  [[-3.384615384615384, 0.0], [0, 0]]
+divergencia fast:  1501.2738805986721
+simulation  1
+Amount of frontiers found:  195
+[INFO] [1691786955.627445, 337.836000]: Pausing Gazebo simulation...
+[INFO] [1691786955.637208, 337.842000]: Gazebo simulation paused.
+[INFO] [1691786957.042954, 337.842000]: Unpausing Gazebo simulation...
+[INFO] [1691786957.046581, 337.842000]: Gazebo simulation unpaused.
+1542.276666625814
+[[-2.4615384615384617, -2.461538461538461], [0, 0]]

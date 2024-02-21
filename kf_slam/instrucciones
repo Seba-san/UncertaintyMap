@@ -1,0 +1,198 @@
+Por si saltan algunos problemas:
+Instala pip:
+ curl -sS https://bootstrap.pypa.io/pip/3.6/get-pip.py | python3
+python3 get-pip.py
+ luego instalar scipy:
+ pip install scipy
+
+ agregarlo al path:
+ export PYTHONPATH=$PYTHONPATH:/home/seba/.local/bin
+ 
+ grabar data:
+ rosbag record -O cova_1vuelta.bag  /slam/states_cova
+
+para hacerlo andar en docker, hacer:
+ docker cp kf_slam rosros:/root/ws/src
+dentro del docker hacer:
+mv kf_slam active_slam
+cd ..
+rm build devel
+catkin_make
+
+para lanzar el map_server:
+base:
+python map_server.py /slam/states_cova robot1_tf/odom_groundtruth /slam/landmark_map /exp_map
+simulado:
+python map_server.py /slam_simulated/states robot1_tf/odom_groundtruth /slam/landmark_map2 /exp_map2
+
+
+Para lanzar el controlador v2:
+python control.py /left_dc_motor/command /left_dc_motor/joint_state /left_wheel_controller/command
+
+ver de usar:
+from numba import jit
+
+@jit(nopython=True)
+def update_matrix(H, R_, idx, x):
+
+Ver de implementar kmeans de sclearn
+
+El codigo update de kalman en golang seria:
+
+func (kf *KF) update(u, z [][]float32) {
+    // measure Z is in world reference, and z needs are in robot reference
+    loc := kf.x[0][:2]
+    z = mat.Sub(mat.NewDense(len(z), len(z[0]), flatten(z)), mat.NewDense(len(z), len(z[0]), flatten(loc))).RawMatrix().Data
+    //
+    kf.x = mat.DenseCopyOf(kf.x.T()).RawMatrix().Data // For compatibility purposes
+    n := len(kf.x)
+    kf.A = mat64.NewUnitDiagonal(n)
+    // x_ := mat64.Add(mat64.Mul(kf.A, kf.x.T()), mat64.NewDense(n-2, 1, []float64{u[0][0], u[1][0], 0, 0})) // prediction state
+    x_ := mat64.Add(mat64.Mul(kf.A, mat64.NewDense(n, 1, flatten(kf.x))), mat64.NewDense(n, 1, flatten(mat64.NewDense(len(u), 1, flatten(u))))) // prediction state
+    z_ := mat64.Mul(kf.H, kf.x) // prediction measure
+    P_ := mat64.Add(mat64.Mul(mat64.Mul(kf.A, kf.P), kf.A.T()), kf.Q) // P_ = A * P * A.T + Q
+    S := mat64.Add(mat64.Mul(mat64.Mul(kf.H, P_), kf.H.T()), kf.R) // previus step for reading purposes
+    K := mat64.Mul(mat64.Mul(P_, kf.H.T()), mat64.Inverse(S)) // kalman gain
+    kf.x = mat64.Add(x_, mat64.Mul(K, mat64.Sub(mat.NewDense(len(z), 1, flatten(z)), z_))) // estimation
+    P := mat64.Sub(P_, mat64.Mul(mat64.Mul(K, S), K.T())) // covariance matrix
+    kf.P = mat64.Add(mat64.Scale(0.5, P), mat64.Scale(0.5, P.T())) // for numerical stability
+    kf.x = mat.DenseCopyOf(kf.x.T()).RawMatrix().Data // For compatibility purposes
+
+
+import (
+    "gonum.org/v1/gonum/mat"
+)
+
+...
+
+// Calcular Kalman Gain
+S := mat.NewDense(n, n, nil)
+S.Add(self.H, self.P.Prod(self.H.T()))
+S.Add(S, self.R)
+
+K := mat.NewDense(n, m, nil)
+K.Prod(self.P.Prod(self.H.T()), S.Inverse())
+
+
+#include <Eigen/Dense>
+
+void update(MatrixXd u, MatrixXd z) {
+    // measure Z is in world reference, and z needs are in robot reference 
+    VectorXd loc = this->x.block<2, 1>(0, 0);
+    z = (z.reshape(-1, 2) - loc.transpose().replicate(z.size() / 2, 1)).reshape(-1, 1);
+    
+    this->x.transposeInPlace(); // For compatibility purposes
+    int n = this->x.rows();
+    this->A = MatrixXd::Identity(n, n);
+    MatrixXd x_ = this->A * this->x + this->B * u; // prediction state
+    MatrixXd z_ = this->H * this->x; // prediction measure
+    MatrixXd P_ = this->A * this->P * this->A.transpose() + this->Q;
+    MatrixXd S = this->H * P_ * this->H.transpose() + this->R;
+    MatrixXd K = P_ * this->H.transpose() * S.inverse();
+    this->x = x_ + K * (z - z_);
+    MatrixXd P = P_ - K * S * K.transpose();
+    this->P = 0.5 * (P * MatrixXd::Ones(n, n) + P.transpose()); // for numerical stability
+    this->x.transposeInPlace(); // For compatibility purposes
+}
+}
+
+# El error que sale en el slam2d es: (sospecho que esto pasa cuando gira sobre su eje)
+Traceback (most recent call last):
+  File "/root/ws/src/pioneer2dx/scripts/kf_slam/slam2d.py", line 406, in <module>
+    test.run()
+  File "/root/ws/src/pioneer2dx/scripts/kf_slam/slam2d.py", line 357, in run
+    self.find_correspondences()   
+  File "/root/ws/src/pioneer2dx/scripts/kf_slam/slam2d.py", line 249, in find_correspondences
+    cone=np.mean(cones_world[idx],axis=0)
+IndexError: boolean index did not match indexed array along dimension 0; dimension is 18 but corresponding boolean dimension is 20
+
+
+# Testeando simulated slam.
+cd /home/seba/Dropbox/1_Doctorado/exploration_method/limpio_docker/ws/pioneer2dx/worlds/
+docker cp galpon_conos.world rosros_exploration:/root/ws/src/pioneer2dx/worlds/
+ 
+para hacerla andar hay que copiar estos archivos:
+cd /home/seba/Dropbox/1_Doctorado/exploration_method/limpio_docker/ws/pioneer2dx/launch
+docker cp one_cone.launch rosros_exploration:/root/ws/src/pioneer2dx/launch/
+docker cp empty.launch rosros_exploration:/root/ws/src/pioneer2dx/launch/
+docker cp multiple_robots.launch rosros_exploration:/root/ws/src/pioneer2dx/launch/
+cd ../worlds/
+docker cp one_cone.world rosros_exploration:/root/ws/src/pioneer2dx/worlds/
+
+
+En lugar de copiar todo a mano, se puede hacer (testear):
+cd /home/seba/Dropbox/1_Doctorado/exploration_method/limpio_docker/ws/pioneer2dx/
+docker cp  worlds rosros_exploration:/root/ws/src/pioneer2dx/
+docker cp  launch rosros_exploration:/root/ws/src/pioneer2dx/
+
+para testearlo hacer:
+roscd pioneer2dx/scripts/kf_slam/
+roslaunch test.launch
+
+roscd pioneer2dx/scripts/kf_slam/
+python map_server.py /slam/states_cova robot1_tf/odom_groundtruth /slam/landmark_map /exp_map
+
+
+roscd pioneer2dx/scripts/
+python controller_node.py
+
+
+para guardar un mapa: 
+cd /root/ws/src/pioneer2dx/scripts/kf_slam
+python save_map.py
+
+Se guarda el mapa de exploracion, luego desde matlab hacer:
+cd /home/seba/Dropbox/1_Doctorado/exploration_method/kf_slam
+ figure(1);load matlab_matrix.mat; imagesc(test);axis equal
+ 
+ Se agrega ahora la posibilidad de configurar multiple_robots.launch desde el yaml mediante un archivo de python. 
+ prepare_simulation.py
+ 
+ Hay que escribir un tutorial para hacer andar el rrt y testearlo...
+ de memoria:
+ .- lanzar los nodos: roslaunch test.launch
+ .- correr: python rrt_wrapper.py
+ .- correr: python way_point_manager.py
+ para el test hacer:
+ .- python rrt_test.py 10 5
+eso mueve el vehiculo a la pose 10 5. Tener en cuenta que si ya se planifico antes con el mismo punto de inicio, no va a correr todo el arbol nuevamente. Esa es la diferencia entre run_first_time y run_hot ... 
+ 
+ ------------------------------------------------------------- O ------------------------------------------------
+ Simulated_2d_slam vs Simulated_2d_slam2
+ 
+Simulated_2d_slam2 paraleliza las simulaciones, el otro lo hace en un solo hilo.
+
+El core de la simulacion esta en la clase "SLAM2D_simulated"
+
+Simulated_2d_slam_fast: La idea era implementar las simulacion sin tanto costo computacional, pero no se si quedo 100% implementado.
+
+docker cp ~/Dropbox/1_Doctorado/exploration_method/limpio_docker/ws/pioneer2dx/worlds/rectangle_landmarks.world rosros_exploration:/root/ws/src/pioneer2dx/worlds/
+docker cp ~/Dropbox/1_Doctorado/exploration_method/limpio_docker/ws/pioneer2dx/launch/rectangle_landmarks.launch rosros_exploration:/root/ws/src/pioneer2dx/launch/
+
+docker cp ~/Dropbox/1_Doctorado/exploration_method/limpio_docker/ws/pioneer2dx/worlds/piece.world rosros_exploration:/root/ws/src/pioneer2dx/worlds/
+docker cp ~/Dropbox/1_Doctorado/exploration_method/limpio_docker/ws/pioneer2dx/launch/piece.launch rosros_exploration:/root/ws/src/pioneer2dx/launch/
+docker cp /home/seba/Dropbox/1_Doctorado/exploration_method/limpio_docker/models/ rosros_exploration:/usr/share/gazebo-11/
+
+docker cp ~/Dropbox/1_Doctorado/exploration_method/limpio_docker/ws/pioneer2dx/worlds rosros_exploration:/root/ws/src/pioneer2dx/
+docker cp ~/Dropbox/1_Doctorado/exploration_method/limpio_docker/ws/pioneer2dx/launch rosros_exploration:/root/ws/src/pioneer2dx/
+docker cp /home/seba/Dropbox/1_Doctorado/exploration_method/limpio_docker/models/ rosros_exploration:/usr/share/gazebo-11/
+
+Gazebo models path: /usr/share/gazebo-9/models
+
+docker cp   object_to_build rosros_exploration:/usr/share/gazebo-11/models/
+para testear el mundo:
+gazebo /root/ws/src/pioneer2dx/worlds/piece.world --verbose
+
+Para grabar la curva de divergencia:
+rosbag record -O divergence_test_1_0  /slam/states_cova /divergence
+para convertirlo a csv:
+rostopic echo -b divergence_test_1_0.bag -p /divergence > divergence.csv
+
+## Para ahcer andar el keyboard con python
+pip install pynput 
+
+# para grabar el test
+rosbag record -O galpon_1  /slam/states_cova /divergence
+python save_map.py galpon_1
+rostopic echo -b galpon_1.bag -p /slam/states_cova > cova.csv
+

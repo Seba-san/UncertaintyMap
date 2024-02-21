@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>active_slam</name>
+  <version>1.0.0</version>
+  <description>
+  This package provides a 2D map server and a measure of information.
+  </description>
+  <maintainer email="ssansoni@inaut.unsj.edu.ar">seba san</maintainer>
+  <license>BSD</license>
+ <buildtool_depend>catkin</buildtool_depend>
+     <!--<depend>python3-numpy</depend>
+    <depend>python3-scipy</depend>
+
+  <exec_depend>rospy</exec_depend>
+
+
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>std_msgs</exec_depend>-->
+</package>

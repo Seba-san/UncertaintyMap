@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <rosparam file="$(find pioneer2dx)/scripts/kf_slam/parameters.yaml" />
+
+    <arg name="path_kf_slam" default="scripts/kf_slam" />
+    <include file="$(find pioneer2dx)/launch/galpon_conos.launch" >
+    <!-- <include file="$(find pioneer2dx)/launch/empty.launch" > -->
+    <!-- <include file="$(find pioneer2dx)/launch/one_cone.launch"> -->
+    <!-- <include file="$(find pioneer2dx)/launch/inaut.launch"> -->
+    <!-- <include file="$(find pioneer2dx)/launch/rectangle_landmarks.launch"> -->
+    <!-- <include file="$(find pioneer2dx)/launch/piece.launch"> -->
+    <!-- <include file="$(find pioneer2dx)/launch/corridor.launch"> -->
+    <!-- <include file="$(find pioneer2dx)/launch/rrt_planner_test.launch"> -->
+    </include>
+
+    <node name="slam_node" pkg="pioneer2dx" type="slam2d.py" args="" required="true" output="screen" />
+
+    <node name="mapping_node" pkg="pioneer2dx" type="map_server.py" required="true" output="screen" cwd="node"
+    args="/slam/states_cova robot1_tf/odom_groundtruth /slam/landmark_map /exp_map" />
+
+    <!-- Es para mostrar las trayectorias-->
+    <node name="path_plot_node" pkg="pioneer2dx" type="trajectory_plot.py" args="" required="false"
+        output="screen" />
+        <!-- Lleva el robot diferencial de un punto A al punto B-->
+    <node name="master_controller_node" pkg="pioneer2dx" type="path_following.py" output="screen" />
+    <!-- Evita obstaculos-->
+    <node name="obstacle_node" pkg="pioneer2dx" type="obstacle_avoidance.py" args="" required="true" output="screen" />
+
+
+
+    <node name="rviz_node" pkg="rviz" type="rviz"
+        args="-d $(find pioneer2dx)/$(arg path_kf_slam)/map.rviz" />
+    <!-- <node name="rqt_node" pkg="rqt_gui" type="rqt_gui" args="- -perspective-file $(find pioneer2dx)/$(arg path_kf_slam)/master_control.perspective" /> -->
+        <node name="rqt_node" pkg="rqt_gui" type="rqt_gui" args="--perspective-file $(find pioneer2dx)/$(arg path_kf_slam)/galpon_experiments.perspective" />
+
+</launch>

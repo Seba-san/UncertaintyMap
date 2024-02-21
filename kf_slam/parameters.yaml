@@ -1,0 +1,28 @@
+planner: simple  # double or simple
+distance_branch: [0, 4.0, -4.0] #m
+
+sigma_max: 1.0 #m 0.6
+fov: 5.0 #m
+cell_size: 0.1 #m
+max_distance_landmark: 1.0 #m maxima distancia posible para que los puntos pertenezcan a un landmark. Parametro del sistema SLAM. Muy pequeño genera muchos landmarks, muy grande hace malas aosciaciones.
+initial_pose:
+  x: -12.0  #m -12 galpon , 3.5 corridor
+  y: -8.0     #m +-7.5 galpon, 1.0 corridor
+Q_noise: 0.01 #m^2
+R_noise: 0.01 #m^2
+P_0: 0.01 #m^2
+UF: false # imlpementa las fronteras de incertidumbre
+uf_treshold: 0.3 #m umbral para que una frontera sea detectada
+min_obstacle_distance_sdf: 0.8 #m distancia a los obstaculos para crear el mapa de sdf
+min_distance_obstacle_avoidance: 0.85 #m 0.7 parametro para el sistema autonomo de esquivar obstaculos. Si se va a mover dentro de un lugar cerrado, se recomienda ponerlo en 0.1  
+#bbox: [[[0,0],[60,60],0.1,0.1],[[20,20],[40,40],0.6,0.5]] # bounding box area explorada en metros. [bbox1, bbox2,...], con bboxi=[sup izq, inf der, sigma,occupado], sup_izq=[x,y] 
+bbox: []
+planner_mpc: false  # implementa el MPC, esto es: cuando el planner esta en modo "double", planifica los 2, pero ejecuta solo el primero.
+map_size: [60.0, 60.0] #m x,y
+previous_map_flag: false # si es true, carga un mapa desde un archivo previous_map.mat
+max_iter_rrt: 2000 # maximun iterations for the rrt* algorithm.
+map: galpon_1   # nombre del mapa o direccion del mapa.
+# Faltan implementar... :
+
+
+map_agent: true # incorpora la incertidumbre del agente en el mapa de landmarks, es experimental.

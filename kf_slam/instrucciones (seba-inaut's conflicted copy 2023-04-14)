@@ -1,0 +1,25 @@
+Por si saltan algunos problemas:
+Instala pip:
+ curl -sS https://bootstrap.pypa.io/pip/3.6/get-pip.py | python3
+
+ luego instalar scipy:
+ pip install scipy
+
+ agregarlo al path:
+ export PYTHONPATH=$PYTHONPATH:/home/seba/.local/bin
+ 
+ grabar data:
+ rosbag record -O cova_1vuelta.bag  /slam/states_cova
+ 
+ rosbag record -O cova_1vuelta.bag  /slam/states_cova /tf /tf_static
+
+para hacerlo andar en docker, hacer:
+ docker cp kf_slam rosros:/root/ws/src
+dentro del docker hacer:
+mv kf_slam active_slam
+cd ..
+rm build devel
+catkin_make
+
+
+python map_server.py /slam_simulated/states robot1_tf/odom_groundtruth

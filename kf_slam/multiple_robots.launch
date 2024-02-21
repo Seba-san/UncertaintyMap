@@ -1,0 +1,17 @@
+<launch>
+
+		<arg name="model" default="$(find pioneer2dx)/models/model.xacro" />
+
+
+  <group ns="robot1">
+	  <param name="tf_prefix" value="robot1_tf" />
+	  <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
+
+    <include file="$(find pioneer2dx)/launch/one_robot.launch">
+      <arg name="init_pose" value="-x -12.0 -y -8.0 -z 0.5" />
+      <arg name="robot_name" value="robot1" />
+    </include>
+  </group>
+	  
+
+</launch>

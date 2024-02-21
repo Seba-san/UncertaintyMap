@@ -1,0 +1,4 @@
+
+# Configuration list for the simulation, this file overwrite parameters.yaml file
+#- {x: -12.0, y: 8.0,   planner: simple, mpc: False, UF: False, sigma_max: 0.6, map: galpon_1} #6
+ - {x: -12.0, y: -8.0,   planner: simple, mpc: False, UF: False, sigma_max: 1.0, map: galpon_1} #7
