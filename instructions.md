@@ -4,10 +4,12 @@
 ### Run docker container
 
 `cd kf_slam `
+
 `./run.sh oenuf_active_slam `
 
 ### Launch a complete simulation
 This code load data from "simulaciones_planificadas.yaml", overwrite "parameters.yaml" and launch all ROS nodes.
+
 ` roscd pioneer2dx/scripts/kf_slam/ & python master_simulations.py`
 
 ### To enter  in a docker container in other terminal
@@ -15,13 +17,21 @@ This code load data from "simulaciones_planificadas.yaml", overwrite "parameters
 
 ### To launch the system by parts do
 `roscd pioneer2dx/scripts/kf_slam/`
+
 load data from parameters.yaml and overwrite documents in the project
+
 `python prepare_simulation.py `
+
  # Launch the environment, controllers and robot 
+ 
 `roslaunch test.launch `
+
 it is the way point manager
+
 `python way_point_manager.py  `
+
 implements the modified RRT algorithm
+
 `python active_slam_core_rrt.py  `
 
 
@@ -52,7 +62,9 @@ max_iter_rrt: 2000 # maximun iterations for the rrt* algorithm.
 map: galpon_1   #name map, it will be used as direction folder in future implementations.
 ```
 ### Planified simulations from "simulaciones_planificadas.yaml" file
+
 [initial pose], [planner], type of planner, UF implementation, sigma_max,  map name
+
 ` - {x: -12.0, y: -8.0,   planner: simple, mpc: False, UF: False, sigma_max: 1.0, map: galpon_1}  `
 
 
