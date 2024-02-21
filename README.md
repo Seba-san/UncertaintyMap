@@ -3,4 +3,4 @@
 This repository is under construction.
 To get the data of paper, go to [instructions.md](instructions.md)
 
-The data of all simulations is in [data](data)
+The data of all simulations are in [data](data)
