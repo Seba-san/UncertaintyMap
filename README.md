@@ -29,7 +29,6 @@ If you would like to contribute to this project, please consider:
  - Opening an issue to discuss potential improvements.
 
 ## TODO
- - Make a demostrative video
  - Make Gallery of images of the system
 
 ## Citation
