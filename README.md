@@ -18,6 +18,10 @@ Follow the instructions in [instructions](instructions.md) to build and run the 
 You can adjust the simulation parameters by modifying the **parameters.yaml** and/or **simulaciones_planificadas.yaml** files as needed.
 
 ## Aditional Resources
+For a visual demonstration of the system, watch our video:
+
+
+[![Watch the video](https://img.youtube.com/vi/U-LQHcDBNMk/0.jpg)](https://youtu.be/U-LQHcDBNMk)
 
 ## Contributing
 If you would like to contribute to this project, please consider:
@@ -27,3 +31,13 @@ If you would like to contribute to this project, please consider:
 ## TODO
  - Make a demostrative video
  - Make Gallery of images of the system
+
+## Citation
+If you find this work useful in any way, please cite the following paper:
+```
+@article{sansoni4774155optimizing,
+title={Optimizing Exploration with a New Uncertainty Framework for Active SLAM Systems},
+author={Sansoni, Sebastian and Gimenez, Javier and Castro, Gaston and Tosetti, Santiago and Capraro, Flavio},
+journal={Available at SSRN 4774155}
+}
+```
