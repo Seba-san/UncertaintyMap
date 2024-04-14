@@ -157,7 +157,7 @@ def process_(show_animation=False)->(Path,float):
     # p_objetive,distance,flag=get_frontiers(md,obstacle_map=modified_obstacle_map.T,u_map=md.exp_map)
     centers,flag=get_frontiers(md,obstacle_map=modified_obstacle_map.T,u_map=md.exp_map,show_animation=show_animation)
     if not flag:
-        print('No se encontro un objetivo')
+        print('A goal was not found.') # No se encontro un objetivo
         return None,None
     
     for c in centers:
@@ -255,7 +255,7 @@ def process_(show_animation=False)->(Path,float):
                 #divergences.append(diver)
                 #print('paso 1')
         else:
-            print('No se encontro un path')
+            print('A path was not found.')
             divergences.append(0)
             divergences_.append(0)
             paths.append([])
@@ -264,14 +264,14 @@ def process_(show_animation=False)->(Path,float):
     print('rewards: ',np.array(divergences).round(3))
 
     if max_value==0:
-        print('rrt no encontro ningun camino viable, se vuelve a computar')
+        print('RRT did not find any viable path, recalculating.')
         return -1,None
     max_index = divergences.index(max_value)
     
     clear_all_markers(marker_array,frame_id="robot1_tf/odom_groundtruth")
     marker_data=create_border_marker(centers,frame_id="robot1_tf/odom_groundtruth",id=max_index,radius=0.5)
     marker_array.publish(marker_data)
-    print("El maximo valor de divergencia es: ",f'{max_value:.3f}', " y se encuentra en el goal: ",np.array(goals[max_index]).round(3))
+    #print("El maximo valor de divergencia es: ",f'{max_value:.3f}', " y se encuentra en el goal: ",np.array(goals[max_index]).round(3))
 
     return paths[max_index],divergences_[max_index]
 
@@ -324,10 +324,10 @@ def principal():
             path,predicted_diver=process_()
             if path is None:
                 #print('No se encontro un path')
-                rospy.signal_shutdown('tarea finalizada')
+                rospy.signal_shutdown('Task successfully completed.')
                 return
             elif path==-1:
-               rospy.logwarn('No se encuentra un path valido. Se requiere mover el vehiculo para encontrar un path valido')
+               rospy.logwarn('A valid path is not found. It is necessary to move the vehicle to find a valid path.')
                # disminuir a cero la exclusion
                # calcular un path cercano a un lugar libre
                # ejecutar ese path
@@ -339,9 +339,9 @@ def principal():
                #move_robot_safe()
                #return
                if recompute_flag>10:
-                   rospy.logwarn('Se busco un path valido 10 veces y no se encontro. Se requiere mover el vehiculo para encontrar un path valido')
-                   plt.plot(1,1,'xr')
-                   plt.show()
+                   rospy.logerr('A valid path was searched for 10 times and not found. It is necessary to move the vehicle to find a valid path. The simulation will close: ERROR path not found.')
+                   #plt.plot(1,1,'xr')
+                   #plt.show()
                    return
                recompute_flag+=1
             else:
