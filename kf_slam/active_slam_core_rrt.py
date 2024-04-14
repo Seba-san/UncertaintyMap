@@ -26,6 +26,9 @@ from uncertainty_frointier import UFrontier
 
 from scipy.ndimage import distance_transform_edt # implementa la SDF sobre un mapa de ocupacion.
 
+from visualization_msgs.msg import MarkerArray
+from frontiers_markers import create_border_marker,clear_all_markers
+
 path_ready_flag=False
 current_divergence=0.0
 
@@ -55,6 +58,7 @@ def get_states()->Main_data:
     return md# pose_agent[0]=x,pose_agent[1]=y
 
 def get_frontiers(self,u_map=np.array([]),obstacle_map=np.array([]),show_animation=False):
+    # Get frontiers from the map and return senters and a flag that indicates if there are frontiers or not
     #import pdb;pdb.set_trace()
     uf=UFrontier(beta=rospy.get_param('beta'),sig_mx=rospy.get_param('sigma_max'),cs=rospy.get_param('cell_size')
                  ,uf_treshold=rospy.get_param('uf_treshold'),show_animation=show_animation)
@@ -129,7 +133,7 @@ def divergence_prediction():
 
 
 def process_(show_animation=False)->(Path,float):
-    global current_divergence
+    global current_divergence,marker_array
     minimun_distance=rospy.get_param('min_obstacle_distance_sdf')
     max_iter_=rospy.get_param('max_iter_rrt')
     rrt=RRT_star_ROS(show_animation=False,minimun_distance=minimun_distance,max_iter=max_iter_)
@@ -160,6 +164,7 @@ def process_(show_animation=False)->(Path,float):
         goals.append([c[0],c[1]])
 
     print('Goals: ',((np.array(goals)).T).round(3))
+
 
     first_time=True
     divergences=[]
@@ -257,10 +262,15 @@ def process_(show_animation=False)->(Path,float):
             
     max_value = max(divergences)
     print('rewards: ',np.array(divergences).round(3))
+
     if max_value==0:
         print('rrt no encontro ningun camino viable, se vuelve a computar')
         return -1,None
     max_index = divergences.index(max_value)
+    
+    clear_all_markers(marker_array,frame_id="robot1_tf/odom_groundtruth")
+    marker_data=create_border_marker(centers,frame_id="robot1_tf/odom_groundtruth",id=max_index,radius=0.5)
+    marker_array.publish(marker_data)
     print("El maximo valor de divergencia es: ",f'{max_value:.3f}', " y se encuentra en el goal: ",np.array(goals[max_index]).round(3))
 
     return paths[max_index],divergences_[max_index]
@@ -296,12 +306,13 @@ def move_robot_safe():
     pass
     
 def principal():
-    global path_ready_flag, current_divergence
+    global path_ready_flag, current_divergence,marker_array
     rospy.init_node('active_slam',anonymous=True)
     pub_rrt_path=rospy.Publisher('/path_rrt_star',Path,queue_size=1)
     
     path_ready=rospy.Subscriber('/path_ready',Bool,callback=path_callback,queue_size=1)
     divergence_reading=rospy.Subscriber('/divergence',divergence,callback=divergence_callback,queue_size=1)
+    marker_array = rospy.Publisher('border_markers', MarkerArray, queue_size=10)
     rate=rospy.Rate(1)
     predicted_diver=None
     recompute_flag=0
