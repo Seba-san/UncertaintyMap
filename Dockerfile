@@ -22,6 +22,7 @@ RUN apt-get install ros-noetic-rviz -y
 #RUN apt install g++ -y
 RUN apt install build-essential -y
 RUN apt-get install git -y
+RUN apt install ros-noetic-rqt-plot -y
 RUN echo "source /usr/share/gazebo/setup.sh" >> ~/.bashrc
 RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 RUN mkdir -p /root/ws/src
