@@ -63,6 +63,10 @@ ENV TERM xterm-256color
 #EXPOSE 22
 COPY ./ws/pioneer2dx/worlds /root/ws/src/pioneer2dx/
 COPY ./ws/pioneer2dx/launch /root/ws/src/pioneer2dx/
+# no tendira que ser?:
+#COPY ./ws/pioneer2dx/worlds/ /root/ws/src/pioneer2dx/worlds/
+#COPY ./ws/pioneer2dx/launch/ /root/ws/src/pioneer2dx/launch/
+
 COPY ./models/ /usr/share/gazebo-11/
 
 
