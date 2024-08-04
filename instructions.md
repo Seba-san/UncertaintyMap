@@ -10,7 +10,7 @@ docker build -t oenuf_active_slam -f Dockerfile .
 ### Run the Docker Container
 To run the Docker container, navigate to the **kf_slam** directory and execute the provided script:
 ```bash
-cd kf_slam 
+cd UncertaintyMap/kf_slam 
 ./run.sh oenuf_active_slam 
 ```
 ### Launch a Complete Simulation
@@ -25,7 +25,7 @@ python master_simulations.py
 If you need to enter the Docker container through another terminal window, use the following commands:
 
 ```bash
-cd kf_slam 
+cd UncertaintyMap/kf_slam 
 ./entrar.sh
 ```
 
@@ -52,7 +52,7 @@ python way_point_manager.py
  ```
 ### Close Docker container:
 ```bash 
-cd kf_slam 
+cd UncertaintyMap/kf_slam 
 ./cerrar_docker.sh 
 ```
 
