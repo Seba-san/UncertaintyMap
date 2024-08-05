@@ -5,6 +5,7 @@ This document provides step-by-step instructions for building and running the Do
 To build the Docker container, run the following command in your terminal:
 
 ```bash
+cd  UncertaintyMap
 docker build -t oenuf_active_slam -f Dockerfile . 
 ```
 ### Run the Docker Container
