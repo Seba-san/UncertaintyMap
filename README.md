@@ -36,7 +36,12 @@ If you find this work useful in any way, please cite the following paper:
 ```
 @article{sansoni4774155optimizing,
 title={Optimizing Exploration with a New Uncertainty Framework for Active SLAM Systems},
-author={Sansoni, Sebastian and Gimenez, Javier and Castro, Gaston and Tosetti, Santiago and Capraro, Flavio},
-journal={Available at SSRN 4774155}
+author = {Sebastian Sansoni and Javier Gimenez and Gastón Castro and Santiago Tosetti and Flavio Capraro},
+journal = {Robotics and Autonomous Systems},
+volume = {193},
+pages = {105059},
+year = {2025},
+issn = {0921-8890},
+doi = {https://doi.org/10.1016/j.robot.2025.105059}
 }
 ```
