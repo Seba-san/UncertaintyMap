@@ -3,3 +3,5 @@ bags/*
 *.svg
 *.png
 scripts/__pycache__/*
+!wheel_3.png.005.png
+!wheel.png.002.png
