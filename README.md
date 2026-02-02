@@ -3,7 +3,8 @@ This repository is under construction.
 
 
 ## Project Description
-This repository contains the code and associated resources for our research on optimizing exploration in active SLAM systems through a new uncertainty framework. The data of all simulations are in  [data](data)
+This repository contains the code and associated resources for our research on optimizing exploration in active SLAM systems through a new uncertainty framework. The data of all simulations are in  [data](data). 
+The paper can be acceded by this link: https://arxiv.org/pdf/2506.17775
 
 ## Getting Started
 To use this project, clone the repository to your local machine using:
@@ -34,7 +35,7 @@ If you would like to contribute to this project, please consider:
 ## Citation
 If you find this work useful in any way, please cite the following paper:
 ```
-@article{sansoni4774155optimizing,
+@article{sansoniOptimizing,
 title={Optimizing Exploration with a New Uncertainty Framework for Active SLAM Systems},
 author = {Sebastian Sansoni and Javier Gimenez and Gastón Castro and Santiago Tosetti and Flavio Capraro},
 journal = {Robotics and Autonomous Systems},
